@@ -596,9 +596,19 @@ NSComparisonResult compareViewDepth(UIView *view1, UIView *view2, iCarousel *sel
             
             if (_vertical)
             {
+//                transform = CATransform3DTranslate(transform, -radius, 0.0, 0.0);
+//                transform = CATransform3DRotate(transform, angle * offset, 0.0, 0.0, 1.0);
+//                
+//
+//                return CATransform3DTranslate(transform, radius, 0.0, offset * 0.01);
+                
                 transform = CATransform3DTranslate(transform, -radius, 0.0, 0.0);
                 transform = CATransform3DRotate(transform, angle * offset, 0.0, 0.0, 1.0);
-                return CATransform3DTranslate(transform, radius, 0.0, offset * 0.01);
+                transform = CATransform3DTranslate(transform, radius, 0.0, offset * 0.01);
+                
+                return CATransform3DRotate(transform, -angle * offset, 0.0, 0, 1.0);
+
+                
             }
             else
             {

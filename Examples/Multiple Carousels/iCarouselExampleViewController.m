@@ -61,8 +61,18 @@
     [super viewDidLoad];
     
     //configure carousel
-    carousel1.type = iCarouselTypeCoverFlow2;
-    carousel2.type = iCarouselTypeLinear;
+//    carousel1.type = iCarouselTypeCoverFlow2;
+//    carousel2.type = iCarouselTypeLinear;
+    
+    carousel2.type = iCarouselTypeTimeMachine;
+    carousel2.hidden = YES;
+    
+    //configure carousel
+    carousel1.type = iCarouselTypeWheel;
+    carousel1.vertical = YES;
+    carousel1.decelerationRate = 0.5;
+    carousel1.backgroundColor = UIColor.whiteColor;
+    carousel2.backgroundColor = UIColor.whiteColor;
 }
 
 - (void)viewDidUnload
@@ -97,13 +107,14 @@
     //create new view if no view is available for recycling
     if (view == nil)
     {
-        view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 200.0f, 200.0f)];
-        ((UIImageView *)view).image = [UIImage imageNamed:@"page.png"];
+//        view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 200.0f, 200.0f)];
+//        ((UIImageView *)view).image = [UIImage imageNamed:@"page.png"];
+        view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 100.0f,60.0f)];
         view.contentMode = UIViewContentModeCenter;
         label = [[UILabel alloc] initWithFrame:view.bounds];
-        label.backgroundColor = [UIColor clearColor];
+        label.backgroundColor = [UIColor grayColor];
         label.textAlignment = NSTextAlignmentCenter;
-        label.font = [label.font fontWithSize:50];
+        label.font = [label.font fontWithSize:20];
         [view addSubview:label];
     }
     else
@@ -132,21 +143,33 @@
 
 - (CGFloat)carousel:(iCarousel *)carousel valueForOption:(iCarouselOption)option withDefault:(CGFloat)value
 {
-    //customize carousel display
-    switch (option)
-    {
-        case iCarouselOptionSpacing:
-        {
-            if (carousel == carousel2)
-            {
-                //add a bit of spacing between the item views
+    if (carousel == carousel2) {
+        switch (option) {
+            case iCarouselOptionSpacing:
                 return value * 1.05f;
+                
+            default:
+                return value *1.05f;
+        }
+    } else {
+        switch (option) {
+            case iCarouselOptionFadeMinAlpha:
+//                return value;
+                return 0.;
+            case  iCarouselOptionFadeMax:
+                return 0.5;
+            case  iCarouselOptionFadeMin:
+                return -0.5;
+            case  iCarouselOptionFadeRange:
+                NSLog(@"%f",value);
+//                return value;
+                return 2;
+            default:
+            {
+                return value*0.95;
             }
         }
-        default:
-        {
-            return value;
-        }
+        
     }
 }
 
